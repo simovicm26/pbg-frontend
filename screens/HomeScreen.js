@@ -4,6 +4,7 @@ import ProductsGrid from "../components/ProductsGrid";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProductsDetails from "../components/ProductsDetails";
+import ProductForm from "../components/ProductForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,11 @@ function HomeScreen() {
       <Stack.Screen
         name="ProductsDetails"
         component={ProductsDetails}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProductForm"
+        component={ProductForm}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

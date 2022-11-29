@@ -30,7 +30,9 @@ function ProductsGrid(props) {
         numColumns={2}
       />
       <View style={styles.addButton}>
-        <Pressable>{myIcon}</Pressable>
+        <Pressable onPress={() => props.navigation.navigate("ProductForm")}>
+          {myIcon}
+        </Pressable>
       </View>
     </>
   );
