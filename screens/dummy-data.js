@@ -1,16 +1,66 @@
 import Category from "./category";
 
 export const CATEGORIES = [
-  new Category("c1", "Italian", "#f5428d"),
-  new Category("c2", "Quick & Easy", "#f54242"),
-  new Category("c3", "Hamburgers", "#f5a442"),
-  new Category("c4", "German", "#f5d142"),
-  new Category("c5", "Light & Lovely", "#368dff"),
-  new Category("c6", "Exotic", "#41d95d"),
-  new Category("c7", "Breakfast", "#9eecff"),
-  new Category("c8", "Asian", "#b9ffb0"),
-  new Category("c9", "French", "#ffc7ff"),
-  new Category("c10", "Summer", "#47fced"),
+  new Category(
+    "c1",
+    "Italian",
+    "#f5428d",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
+  new Category(
+    "c2",
+    "Quick & Easy",
+    "#f54242",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
+  new Category(
+    "c3",
+    "Hamburgers",
+    "#f5a442",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
+  new Category(
+    "c4",
+    "German",
+    "#f5d142",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
+  new Category(
+    "c5",
+    "Light & Lovely",
+    "#368dff",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
+  new Category(
+    "c6",
+    "Exotic",
+    "#41d95d",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
+  new Category(
+    "c7",
+    "Breakfast",
+    "#9eecff",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
+  new Category(
+    "c8",
+    "Asian",
+    "#b9ffb0",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
+  new Category(
+    "c9",
+    "French",
+    "#ffc7ff",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
+  new Category(
+    "c10",
+    "Summer",
+    "#47fced",
+    "A Great ProductA Great ProductA Great ProductA Great ProductA Great ProductA Great Product"
+  ),
 ];
 
 // export const MEALS = [

@@ -18,6 +18,7 @@ function ProductsGrid(props) {
                   props.navigation.navigate("ProductsDetails", {
                     id: itemData.item.id,
                     title: itemData.item.title,
+                    description: itemData.item.description,
                   })
                 }
               >

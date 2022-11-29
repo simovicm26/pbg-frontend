@@ -1,12 +1,27 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import ProductSummery from "./ProductSummery";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ProductsQuantity from "./ProductsQuantity";
+
+const Stack = createNativeStackNavigator();
 
 function ProductsDetails({ route }) {
-  const { id, title } = route.params;
+  const { id, title, description } = route.params;
   return (
-    <View>
-      <Text>{title}</Text>
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ProductSummery"
+        component={ProductSummery}
+        options={{ headerShown: false }}
+        initialParams={{ id, title, description }}
+      />
+      <Stack.Screen
+        name="ProductsQuantity"
+        component={ProductsQuantity}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 }
 
