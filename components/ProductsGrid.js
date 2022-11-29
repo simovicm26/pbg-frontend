@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList, View, Text, StyleSheet, Pressable } from "react-native";
+import openSocket from "socket.io-client";
 // import { Icon } from "react-native-vector-icons/Icon";
 /* import { CATEGORIES } from "../screens/dummy-data"; */
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -14,14 +15,23 @@ function ProductsGrid(props) {
       .then(res => res.json())
       .then(data => {
         console.log(data)
-        setData(data)
+        setData(data.products)
         setIsLoading(false)
-      }
-      )
+        return
+      })
+      .then(() => {
+        const socket = openSocket("http://10.0.2.2:8000")
+        socket.on("connect", () => console.log(socket.id));
+        socket.on('productAdded', (data) => {
+          console.log(data)
+          setData(prev => [...prev, data.product])
+        })
+      })
       .catch(error => console.log(error))
   }, [])
 
   function renderItem({ item }) {
+    console.log(item)
     return (
       <View style={styles.gridItem}>
         <Pressable
@@ -44,7 +54,7 @@ function ProductsGrid(props) {
     return (
       <>
         <FlatList
-          data={data.products}
+          data={data}
           renderItem={renderItem}
           keyExtractor={item => item._id}
           numColumns={2}
@@ -58,6 +68,17 @@ function ProductsGrid(props) {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
   gridItem: {
