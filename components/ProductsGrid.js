@@ -1,42 +1,62 @@
 import React from "react";
 import { FlatList, View, Text, StyleSheet, Pressable } from "react-native";
 // import { Icon } from "react-native-vector-icons/Icon";
-import { CATEGORIES } from "../screens/dummy-data";
+/* import { CATEGORIES } from "../screens/dummy-data"; */
 import Icon from "react-native-vector-icons/FontAwesome";
 const myIcon = <Icon name="plus" size={30} color="#ffffff" />;
 
 function ProductsGrid(props) {
-  return (
-    <>
-      <FlatList
-        data={CATEGORIES}
-        renderItem={(itemData) => {
-          return (
-            <View style={styles.gridItem}>
-              <Pressable
-                onPress={() =>
-                  props.navigation.navigate("ProductsDetails", {
-                    id: itemData.item.id,
-                    title: itemData.item.title,
-                    description: itemData.item.description,
-                  })
-                }
-              >
-                <View style={styles.gridBox}></View>
-                <Text style={styles.gridText}>{itemData.item.title}</Text>
-              </Pressable>
-            </View>
-          );
-        }}
-        numColumns={2}
-      />
-      <View style={styles.addButton}>
-        <Pressable onPress={() => props.navigation.navigate("ProductForm")}>
-          {myIcon}
+  const [data, setData] = React.useState({})
+  const [isLoading, setIsLoading] = React.useState(true)
+
+  React.useEffect(() => {
+    fetch('http://10.0.2.2:8000/shop/getProducts')
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setData(data)
+        setIsLoading(false)
+      }
+      )
+      .catch(error => console.log(error))
+  }, [])
+
+  function renderItem({ item }) {
+    return (
+      <View style={styles.gridItem}>
+        <Pressable
+          onPress={() =>
+            props.navigation.navigate("ProductsDetails", {
+              id: item._id,
+              title: item.title,
+              description: item.description,
+            })
+          }
+        >
+          <View style={styles.gridBox}></View>
+          <Text style={styles.gridText}>{item.title}</Text>
         </Pressable>
       </View>
-    </>
-  );
+    )
+  }
+
+  if (!isLoading) {
+    return (
+      <>
+        <FlatList
+          data={data.products}
+          renderItem={renderItem}
+          keyExtractor={item => item._id}
+          numColumns={2}
+        />
+        <View style={styles.addButton}>
+          <Pressable onPress={() => props.navigation.navigate("ProductForm")}>
+            {myIcon}
+          </Pressable>
+        </View>
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
