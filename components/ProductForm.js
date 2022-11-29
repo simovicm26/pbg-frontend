@@ -7,8 +7,19 @@ export default function ProductForm() {
     const [description, setDescription] = React.useState('')
     const [imageUrl, setImageUrl] = React.useState('')
 
-    function handlePress() {
+    async function handlePress() {
         console.log(title, price, description, imageUrl)
+        try {
+            const res = await fetch('http://10.0.2.2:8000/shop/addProduct', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, price, description, imageUrl })
+            })
+            const data = await res.json()
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
