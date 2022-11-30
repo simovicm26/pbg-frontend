@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Image, View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 export default function UploadImage() {
   const [image, setImage] = useState(null);
-  const addImage = () => {};
+  const addImage = async () => {
+    let _image = await ImagePicker.launchImageLibraryAsync();
+  };
   return (
     <View style={imageUploaderStyles.container}>
       {image && (
@@ -15,8 +18,10 @@ export default function UploadImage() {
           onPress={addImage}
           style={imageUploaderStyles.uploadBtn}
         >
-          <Text>{image ? "Edit" : "Upload"} Image</Text>
-          <AntDesign name="camera" size={20} color="black" />
+          <Text style={{ color: "white" }}>
+            {image ? "Edit" : "Upload"} Image
+          </Text>
+          <AntDesign name="camera" size={20} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -31,6 +36,9 @@ const imageUploaderStyles = StyleSheet.create({
     position: "relative",
     borderRadius: 999,
     overflow: "hidden",
+    marginBottom: 50,
+    borderWidth: 2,
+    borderColor: "red",
   },
   uploadBtnContainer: {
     opacity: 0.7,
@@ -39,7 +47,10 @@ const imageUploaderStyles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "lightgrey",
     width: "100%",
-    height: "25%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#353535",
   },
   uploadBtn: {
     display: "flex",

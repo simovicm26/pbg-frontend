@@ -34,7 +34,7 @@ export default function ProductForm() {
     <>
       <ScrollView>
         <View style={styles.mainWrapper}>
-          <Text style={styles.header}>Add an Item</Text>
+          <ImagePicker></ImagePicker>
           <TextInput
             style={styles.input}
             placeholder="Product Name"
@@ -58,7 +58,6 @@ export default function ProductForm() {
             placeholder="Image URL"
             onChangeText={setImageUrl}
           />
-          <ImagePicker></ImagePicker>
         </View>
       </ScrollView>
       <View style={styles.button}>
@@ -72,7 +71,9 @@ export default function ProductForm() {
 
 const styles = StyleSheet.create({
   mainWrapper: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 80,
+    alignItems: "center",
   },
   header: {
     textAlign: "center",
@@ -108,7 +109,6 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "red",
     padding: 20,
-    marginTop: 10,
   },
   buttonText: { fontSize: 20, textAlign: "center", color: "white" },
 });

@@ -20,12 +20,12 @@ function HomeScreen() {
       <Stack.Screen
         name="ProductsDetails"
         component={ProductsDetails}
-        options={{ headerShown: false }}
+        options={{ title: "Details" }}
       />
       <Stack.Screen
         name="ProductForm"
         component={ProductForm}
-        options={{ headerShown: false }}
+        options={{ title: "Add New Product" }}
       />
     </Stack.Navigator>
   );
