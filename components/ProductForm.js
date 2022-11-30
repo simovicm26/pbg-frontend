@@ -29,11 +29,10 @@ export default function ProductForm() {
     formData.append('description', description)
     try {
       const token = await AsyncStorage.getItem('token')
-      const res = await fetch("http://10.0.2.2:8000/shop/addProduct", {
+      const res = await fetch("https://pbg-server.herokuapp.com/shop/addProduct", {
         method: "POST",
         headers: {
-          "Content-Type": "multipart/form-data",
-          "Authorizaiton": "Bearer " + token
+          "Content-Type": "multipart/form-data"
         },
         body: formData
       });
