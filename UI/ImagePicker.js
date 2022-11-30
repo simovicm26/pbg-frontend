@@ -3,15 +3,16 @@ import { Image, View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
-export default function UploadImage() {
-  const [image, setImage] = useState(null);
+export default function UploadImage(props) {
   const addImage = async () => {
     let _image = await ImagePicker.launchImageLibraryAsync();
+    console.log(_image)
+    props.handleImage(_image['assets'][0]['uri'])
   };
   return (
     <View style={imageUploaderStyles.container}>
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+      {props.image && (
+        <Image source={{ uri: props.image }} style={{ width: 200, height: 200 }} />
       )}
       <View style={imageUploaderStyles.uploadBtnContainer}>
         <TouchableOpacity
@@ -19,7 +20,7 @@ export default function UploadImage() {
           style={imageUploaderStyles.uploadBtn}
         >
           <Text style={{ color: "white" }}>
-            {image ? "Edit" : "Upload"} Image
+            {props.image ? "Edit" : "Upload"} Image
           </Text>
           <AntDesign name="camera" size={20} color="white" />
         </TouchableOpacity>
