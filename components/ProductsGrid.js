@@ -21,46 +21,43 @@ function ProductsGrid(props) {
   const [isLoading, setIsLoading] = React.useState(true);
   const [deleteMode, setDeleteMode] = useState(false);
 
-  let socket
+  const socket = openSocket("https://pbg-server.herokuapp.com")
 
   async function handleDelete(id) {
-    setData(prev => prev.filter((item) => item._id !== id));
     try {
       const res = await fetch(`https://pbg-server.herokuapp.com/shop/deleteProduct/${id}`, {
         method: "DELETE"
       });
       const data = await res.json();
-      console.log(data);
+      socket.on("productDeleted", (data) => {
+        console.log("DELETE")
+        setData(prev => prev.filter(product => product._id !== id))
+      })
     } catch (error) {
       console.log(error);
     }
-
   }
 
   React.useEffect(() => {
     fetch("https://pbg-server.herokuapp.com/shop/getProducts")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+
         setData(data.products);
         setIsLoading(false);
         return;
       })
       .then(() => {
-        socket = openSocket("https://pbg-server.herokuapp.com");
+        ;
         socket.on("connect", () => console.log(socket.id));
         socket.on("productAdded", (data) => {
           setData((prev) => [...prev, data.product]);
         });
-        socket.on("productDeleted", (data) => {
-          console.log(data)
-        })
       })
       .catch((error) => console.log(error));
   }, []);
 
   function renderItem({ item }) {
-    console.log(item);
     return (
       <View style={styles.gridItem}>
         <Pressable
