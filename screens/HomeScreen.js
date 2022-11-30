@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import ProductsGrid from "../components/ProductsGrid";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProductsDetails from "../components/ProductsDetails";
@@ -13,7 +13,9 @@ function HomeScreen() {
       <Stack.Screen
         name="ProductsList"
         component={ProductsGrid}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="ProductsDetails"

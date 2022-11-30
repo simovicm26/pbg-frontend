@@ -2,9 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./HomeScreen";
 import AnalyticsScreen from "./AnalyticsScreen";
-import Icon from "react-native-vector-icons/FontAwesome";
 
-const myIcon = <Icon name="plus" size={30} color="#ffffff" />;
 const Tab = createBottomTabNavigator();
 
 function TabNav(props) {
@@ -36,8 +34,9 @@ function TabNav(props) {
           paddingVertical: 10,
         },
         tabBarShowLabel: false,
-        // tabBarActiveTintColor: "tomato",
-        // tabBarInactiveTintColor: "gray",
+        // headerRight: () => (
+
+        // ),
       })}
     >
       <Tab.Screen
@@ -59,3 +58,9 @@ function TabNav(props) {
 }
 
 export default TabNav;
+
+const styles = StyleSheet.create({
+  addButton: {
+    backgroundColor: "red",
+  },
+});
