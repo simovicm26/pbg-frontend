@@ -3,22 +3,28 @@ import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 
 function ProductsQuantity({ route, navigation }) {
   const { id, title, description, imageUrl, price, stock } = route.params;
+  const [number, onChangeNumber] = useState(0);
   async function handlePress() {
-    console.log(id, stock)
+    console.log(id, stock);
     const res = await fetch(
-      `https://pbg-server.herokuapp.com/shop/addStock/${id}?addStock=${stock / 10}`,
+      `https://pbg-server.herokuapp.com/shop/addStock/${id}?addStock=${number}`,
       {
-        method: "PUT"
+        method: "PUT",
       }
-    )
-    console.log(res)
+    );
+    console.log(res);
     navigation.navigate("ProductSummery");
   }
 
   return (
     <View style={styles.quantityContainer}>
       <Text style={styles.text}>Added Quantity:</Text>
-      <TextInput style={styles.input} keyboardType="numeric" />
+      <TextInput
+        style={styles.input}
+        keyboardType="numeric"
+        onChangeText={onChangeNumber}
+        value={number}
+      />
       <View style={styles.button}>
         <Pressable onPress={handlePress}>
           <Text style={styles.buttonText}>Add</Text>
