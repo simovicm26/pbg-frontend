@@ -17,20 +17,17 @@ const cross = <Icon name="close" size={20} color="#ffffff" />;
 const crossBig = <Icon name="close" size={30} color="#ffffff" />;
 
 function ProductsGrid(props) {
-  const [data, setData] = React.useState({});
+  const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [deleteMode, setDeleteMode] = useState(false);
 
-  function async handleDelete(id) {
-    setData(data.filter((item) => item._id !== id));
+  let socket
 
+  async function handleDelete(id) {
+    setData(prev => prev.filter((item) => item._id !== id));
     try {
       const res = await fetch(`https://pbg-server.herokuapp.com/shop/deleteProduct/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        body: formData
+        method: "DELETE"
       });
       const data = await res.json();
       console.log(data);
@@ -50,12 +47,14 @@ function ProductsGrid(props) {
         return;
       })
       .then(() => {
-        const socket = openSocket("https://pbg-server.herokuapp.com");
+        socket = openSocket("https://pbg-server.herokuapp.com");
         socket.on("connect", () => console.log(socket.id));
         socket.on("productAdded", (data) => {
-          console.log(data);
           setData((prev) => [...prev, data.product]);
         });
+        socket.on("productDeleted", (data) => {
+          console.log(data)
+        })
       })
       .catch((error) => console.log(error));
   }, []);
