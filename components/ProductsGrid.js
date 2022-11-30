@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, View, Text, StyleSheet, Pressable } from "react-native";
+import { FlatList, View, Text, StyleSheet, Pressable, Image } from "react-native";
 import openSocket from "socket.io-client";
 // import { Icon } from "react-native-vector-icons/Icon";
 /* import { CATEGORIES } from "../screens/dummy-data"; */
@@ -44,6 +44,7 @@ function ProductsGrid(props) {
           }
         >
           <View style={styles.gridBox}></View>
+          <Image source={item.imageUrl} />
           <Text style={styles.gridText}>{item.title}</Text>
         </Pressable>
       </View>
@@ -68,17 +69,6 @@ function ProductsGrid(props) {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 const styles = StyleSheet.create({
   gridItem: {
