@@ -7,31 +7,31 @@ import Icon from "react-native-vector-icons/FontAwesome";
 const myIcon = <Icon name="plus" size={30} color="#ffffff" />;
 
 function ProductsGrid(props) {
-  const [data, setData] = React.useState({})
-  const [isLoading, setIsLoading] = React.useState(true)
+  const [data, setData] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch('http://10.0.2.2:8000/shop/getProducts')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        setData(data.products)
-        setIsLoading(false)
-        return
+    fetch("http://10.0.2.2:8000/shop/getProducts")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setData(data.products);
+        setIsLoading(false);
+        return;
       })
       .then(() => {
-        const socket = openSocket("http://10.0.2.2:8000")
+        const socket = openSocket("http://10.0.2.2:8000");
         socket.on("connect", () => console.log(socket.id));
-        socket.on('productAdded', (data) => {
-          console.log(data)
-          setData(prev => [...prev, data.product])
-        })
+        socket.on("productAdded", (data) => {
+          console.log(data);
+          setData((prev) => [...prev, data.product]);
+        });
       })
-      .catch(error => console.log(error))
-  }, [])
+      .catch((error) => console.log(error));
+  }, []);
 
   function renderItem({ item }) {
-    console.log(item)
+    console.log(item);
     return (
       <View style={styles.gridItem}>
         <Pressable
@@ -47,38 +47,27 @@ function ProductsGrid(props) {
           <Text style={styles.gridText}>{item.title}</Text>
         </Pressable>
       </View>
-    )
+    );
   }
 
-  if (!isLoading) {
-    return (
-      <>
+  return (
+    <>
+      {!isLoading && (
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={item => item._id}
+          keyExtractor={(item) => item._id}
           numColumns={2}
         />
-        <View style={styles.addButton}>
-          <Pressable onPress={() => props.navigation.navigate("ProductForm")}>
-            {myIcon}
-          </Pressable>
-        </View>
-      </>
-    );
-  }
+      )}
+      <View style={styles.addButton}>
+        <Pressable onPress={() => props.navigation.navigate("ProductForm")}>
+          {myIcon}
+        </Pressable>
+      </View>
+    </>
+  );
 }
-
-
-
-
-
-
-
-
-
-
-
 
 const styles = StyleSheet.create({
   gridItem: {

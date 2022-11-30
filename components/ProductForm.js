@@ -1,75 +1,112 @@
-import { View, TextInput, StyleSheet, Text, Button } from 'react-native'
-import React from 'react'
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  Pressable,
+  ScrollView,
+} from "react-native";
+import React from "react";
 
 export default function ProductForm() {
-    const [title, setTitle] = React.useState('')
-    const [price, setPrice] = React.useState(null)
-    const [description, setDescription] = React.useState('')
-    const [imageUrl, setImageUrl] = React.useState('')
+  const [title, setTitle] = React.useState("");
+  const [price, setPrice] = React.useState(null);
+  const [description, setDescription] = React.useState("");
+  const [imageUrl, setImageUrl] = React.useState("");
 
-    async function handlePress() {
-        console.log(title, price, description, imageUrl)
-        try {
-            const res = await fetch('http://10.0.2.2:8000/shop/addProduct', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, price, description, imageUrl })
-            })
-            const data = await res.json()
-            console.log(data)
-        } catch (error) {
-            console.log(error)
-        }
+  async function handlePress() {
+    console.log(title, price, description, imageUrl);
+    try {
+      const res = await fetch("http://10.0.2.2:8000/shop/addProduct", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, price, description, imageUrl }),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    return (
-        < View >
-            <Text style={styles.header}>Product Form</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Product Name"
-                onChangeText={setTitle}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Price"
-                onChangeText={setPrice}
-            />
-            <TextInput
-                style={styles.description}
-                placeholder="Description"
-                multiline={true}
-                numberOfLines={5}
-                onChangeText={setDescription}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Image URL"
-                onChangeText={setImageUrl}
-            />
-            <Button title='Add Product' onPress={handlePress} />
-        </View >
-    )
+  return (
+    <>
+      <ScrollView>
+        <View style={styles.mainWrapper}>
+          <Text style={styles.header}>Product Form</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Product Name"
+            onChangeText={setTitle}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Price"
+            onChangeText={setPrice}
+            keyboardType="decimal-pad"
+          />
+          <TextInput
+            style={styles.description}
+            placeholder="Description"
+            multiline={true}
+            numberOfLines={5}
+            onChangeText={setDescription}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Image URL"
+            onChangeText={setImageUrl}
+          />
+        </View>
+      </ScrollView>
+      <View style={styles.button}>
+        <Pressable onPress={handlePress}>
+          <Text style={styles.buttonText}>Add</Text>
+        </Pressable>
+      </View>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
-    header: {
-        textAlign: 'center',
-        marginTop: 25,
-        marginBottom: 30,
-        fontSize: 25
-    },
-    description: {
-        textAlignVertical: 'top',
-        height: 100,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-    },
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-    },
+  mainWrapper: {
+    padding: 20,
+  },
+  header: {
+    textAlign: "center",
+    marginTop: 25,
+    marginBottom: 30,
+    fontSize: 30,
+  },
+  description: {
+    borderWidth: 2,
+    borderColor: "red",
+    borderRadius: 10,
+    width: "100%",
+    height: 100,
+    backgroundColor: "#FFE8E8",
+    fontSize: 20,
+    padding: 10,
+    marginVertical: 10,
+    textAlignVertical: "top",
+  },
+  input: {
+    borderWidth: 2,
+    borderColor: "red",
+    borderRadius: 10,
+    width: "100%",
+    height: 60,
+    backgroundColor: "#FFE8E8",
+    fontSize: 20,
+    padding: 10,
+    marginVertical: 10,
+  },
+
+  button: {
+    width: "100%",
+    backgroundColor: "red",
+    padding: 20,
+    marginTop: 10,
+  },
+  buttonText: { fontSize: 20, textAlign: "center", color: "white" },
 });
