@@ -20,6 +20,7 @@ function ProductsDetails({ route, navigation }) {
         name="ProductsQuantity"
         component={ProductsQuantity}
         options={{ headerShown: false }}
+        initialParams={{ id, title, description, imageUrl, price }}
       />
     </Stack.Navigator>
   );

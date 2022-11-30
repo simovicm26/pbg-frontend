@@ -16,12 +16,11 @@ const bin = <Icon name="trash" size={30} color="#ffffff" />;
 const cross = <Icon name="close" size={20} color="#ffffff" />;
 const crossBig = <Icon name="close" size={30} color="#ffffff" />;
 
+let socket;
 function ProductsGrid(props) {
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [deleteMode, setDeleteMode] = useState(false);
-
-  const socket = openSocket("https://pbg-server.herokuapp.com");
 
   async function handleDelete(id) {
     setDeleteMode((prev) => !prev);
@@ -32,8 +31,8 @@ function ProductsGrid(props) {
           method: "DELETE",
         }
       );
-      const data = await res.json();
-      socket.on("productDeleted", (data) => {
+      const resData = await res.json();
+      socket.on("productDeleted", () => {
         console.log("DELETE");
         setData((prev) => prev.filter((product) => product._id !== id));
       });
@@ -43,6 +42,7 @@ function ProductsGrid(props) {
   }
 
   React.useEffect(() => {
+    socket = openSocket("https://pbg-server.herokuapp.com");
     fetch("https://pbg-server.herokuapp.com/shop/getProducts")
       .then((res) => res.json())
       .then((data) => {

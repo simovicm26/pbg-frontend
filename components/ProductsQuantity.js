@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 
-function ProductsQuantity(props) {
+function ProductsQuantity({ route, navigation }) {
+  const { id, title, description, imageUrl, price, stock } = route.params;
   function handlePress() {
-    props.navigation.navigate("ProductSummery");
+    navigation.navigate("ProductSummery");
   }
 
   return (

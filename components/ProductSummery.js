@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 function ProductSummery({ route, navigation }) {
-  const { id, title, description, imageUrl, price } = route.params;
+  const { id, title, description, imageUrl, price, stock } = route.params;
   console.log(imageUrl);
   return (
     <>
@@ -35,7 +35,7 @@ function ProductSummery({ route, navigation }) {
             </View>
             <View style={styles.descriptionWrapper}>
               <Text style={styles.description}>Current Quantity:</Text>
-              <Text style={styles.description}>5</Text>
+              <Text style={styles.description}>{stock}</Text>
             </View>
           </View>
         </View>
@@ -67,6 +67,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     backgroundColor: "red",
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "red",
   },
   description: {
     fontSize: 20,
