@@ -12,7 +12,6 @@ function ProductsQuantity({ route, navigation }) {
         method: "PUT",
       }
     );
-    console.log(res);
     navigation.navigate("ProductSummery");
   }
 

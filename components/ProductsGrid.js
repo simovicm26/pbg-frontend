@@ -18,7 +18,7 @@ const crossBig = <Icon name="close" size={30} color="#ffffff" />;
 
 let socket;
 function ProductsGrid(props) {
-  const [data, setData] = React.useState([]);
+  const [productData, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [deleteMode, setDeleteMode] = useState(false);
 
@@ -31,7 +31,7 @@ function ProductsGrid(props) {
           method: "DELETE",
         }
       );
-      const resData = await res.json();
+      await res.json();
       socket.on("productDeleted", () => {
         console.log("DELETE");
         setData((prev) => prev.filter((product) => product._id !== id));
@@ -55,6 +55,20 @@ function ProductsGrid(props) {
         socket.on("productAdded", (data) => {
           setData((prev) => [...prev, data.product]);
         });
+        socket.on("stockAdded", (data) => {
+          console.log('yupi')
+          setData(prev => {
+            const index = prev.findIndex(product => product._id === data.productId)
+            console.log(index)
+            const newData = [...prev]
+            const oldStock = newData[index].stock
+            console.log(oldStock)
+            console.log(data.addStock)
+            newData[index].stock = Number(oldStock) + Number(data.addStock)
+            console.log(newData)
+            return newData
+          })
+        })
       })
       .catch((error) => console.log(error));
   }, []);
@@ -113,7 +127,7 @@ function ProductsGrid(props) {
       {!isLoading && (
         <FlatList
           contentContainerStyle={{ alignItems: "center", paddingVertical: 30 }}
-          data={data}
+          data={productData}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
           numColumns={2}
