@@ -18,7 +18,7 @@ function ProductsGrid(props) {
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch("http://10.0.2.2:8000/shop/getProducts")
+    fetch("https://pbg-server.herokuapp.com/shop/getProducts")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -27,7 +27,7 @@ function ProductsGrid(props) {
         return;
       })
       .then(() => {
-        const socket = openSocket("http://10.0.2.2:8000");
+        const socket = openSocket("https://pbg-server.herokuapp.com");
         socket.on("connect", () => console.log(socket.id));
         socket.on("productAdded", (data) => {
           console.log(data);
@@ -52,7 +52,7 @@ function ProductsGrid(props) {
           }
         >
           <Image
-            source={{ uri: `http://10.0.2.2:8000/image/${item.imageUrl.slice(7)}` }}
+            source={{ uri: `https://pbg-server.herokuapp.com/image/${item.imageUrl.slice(7)}` }}
             style={styles.gridBox}
           />
           <Text style={styles.gridText}>{item.title}</Text>
