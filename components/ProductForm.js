@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import React from "react";
+import ImagePicker from "../UI/ImagePicker";
 
 export default function ProductForm() {
   const [title, setTitle] = React.useState("");
@@ -33,7 +34,7 @@ export default function ProductForm() {
     <>
       <ScrollView>
         <View style={styles.mainWrapper}>
-          <Text style={styles.header}>Product Form</Text>
+          <Text style={styles.header}>Add an Item</Text>
           <TextInput
             style={styles.input}
             placeholder="Product Name"
@@ -57,6 +58,7 @@ export default function ProductForm() {
             placeholder="Image URL"
             onChangeText={setImageUrl}
           />
+          <ImagePicker></ImagePicker>
         </View>
       </ScrollView>
       <View style={styles.button}>

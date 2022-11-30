@@ -2,6 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./HomeScreen";
 import AnalyticsScreen from "./AnalyticsScreen";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,9 +59,3 @@ function TabNav(props) {
 }
 
 export default TabNav;
-
-const styles = StyleSheet.create({
-  addButton: {
-    backgroundColor: "red",
-  },
-});
