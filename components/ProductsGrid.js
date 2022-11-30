@@ -1,5 +1,12 @@
 import React from "react";
-import { FlatList, View, Text, StyleSheet, Pressable, Image } from "react-native";
+import {
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+} from "react-native";
 import openSocket from "socket.io-client";
 // import { Icon } from "react-native-vector-icons/Icon";
 /* import { CATEGORIES } from "../screens/dummy-data"; */
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
     height: 60,
     margin: 20,
     borderRadius: 100,
-    backgroundColor: "blue",
+    backgroundColor: "#353535",
     alignItems: "center",
     justifyContent: "center",
   },
