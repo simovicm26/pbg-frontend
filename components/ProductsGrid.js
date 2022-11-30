@@ -24,6 +24,7 @@ function ProductsGrid(props) {
   const socket = openSocket("https://pbg-server.herokuapp.com");
 
   async function handleDelete(id) {
+    setDeleteMode((prev) => !prev);
     try {
       const res = await fetch(
         `https://pbg-server.herokuapp.com/shop/deleteProduct/${id}`,
