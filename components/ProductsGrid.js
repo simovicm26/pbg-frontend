@@ -21,23 +21,25 @@ function ProductsGrid(props) {
   const [isLoading, setIsLoading] = React.useState(true);
   const [deleteMode, setDeleteMode] = useState(false);
 
-  function async handleDelete(id) {
+  async function handleDelete(id) {
     setData(data.filter((item) => item._id !== id));
 
     try {
-      const res = await fetch(`https://pbg-server.herokuapp.com/shop/deleteProduct/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        body: formData
-      });
+      const res = await fetch(
+        `https://pbg-server.herokuapp.com/shop/deleteProduct/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          body: formData,
+        }
+      );
       const data = await res.json();
       console.log(data);
     } catch (error) {
       console.log(error);
     }
-
   }
 
   React.useEffect(() => {

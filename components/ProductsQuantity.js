@@ -1,13 +1,17 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 
-function ProductsQuantity() {
+function ProductsQuantity(props) {
+  function handlePress() {
+    props.navigation.navigate("ProductSummery");
+  }
+
   return (
     <View style={styles.quantityContainer}>
       <Text style={styles.text}>Added Quantity:</Text>
       <TextInput style={styles.input} keyboardType="numeric" />
       <View style={styles.button}>
-        <Pressable>
+        <Pressable onPress={handlePress}>
           <Text style={styles.buttonText}>Add</Text>
         </Pressable>
       </View>
