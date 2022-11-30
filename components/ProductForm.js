@@ -5,6 +5,7 @@ import {
   Text,
   Pressable,
   ScrollView,
+  AsyncStorage
 } from "react-native";
 import React from "react";
 import ImagePicker from "../UI/ImagePicker";
@@ -27,9 +28,13 @@ export default function ProductForm() {
     formData.append('price', price)
     formData.append('description', description)
     try {
+      const token = await AsyncStorage.getItem('token')
       const res = await fetch("http://10.0.2.2:8000/shop/addProduct", {
         method: "POST",
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorizaiton": "Bearer " + token
+        },
         body: formData
       });
       const data = await res.json();
