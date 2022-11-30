@@ -5,37 +5,41 @@ import {
   Text,
   Pressable,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
 } from "react-native";
 import React from "react";
 import ImagePicker from "../UI/ImagePicker";
 
-export default function ProductForm() {
+export default function ProductForm(props) {
   const [title, setTitle] = React.useState("");
   const [price, setPrice] = React.useState(null);
   const [description, setDescription] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
 
   async function handlePress() {
+    props.navigation.navigate("ProductsList");
     console.log(title, price, description, imageUrl);
-    const formData = new FormData()
-    formData.append('image', {
-      name: Date.now() + '_image',
+    const formData = new FormData();
+    formData.append("image", {
+      name: Date.now() + "_image",
       uri: imageUrl,
-      type: 'image/jpeg'
-    })
-    formData.append('title', title)
-    formData.append('price', price)
-    formData.append('description', description)
+      type: "image/jpeg",
+    });
+    formData.append("title", title);
+    formData.append("price", price);
+    formData.append("description", description);
     try {
-      const token = await AsyncStorage.getItem('token')
-      const res = await fetch("https://pbg-server.herokuapp.com/shop/addProduct", {
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        body: formData
-      });
+      const token = await AsyncStorage.getItem("token");
+      const res = await fetch(
+        "https://pbg-server.herokuapp.com/shop/addProduct",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          body: formData,
+        }
+      );
       const data = await res.json();
       console.log(data);
     } catch (error) {
