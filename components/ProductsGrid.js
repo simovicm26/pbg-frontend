@@ -71,6 +71,7 @@ function ProductsGrid(props) {
                 description: item.description,
                 imageUrl: item.imageUrl,
                 price: item.price,
+                stock: item.stock
               });
           }}
         >

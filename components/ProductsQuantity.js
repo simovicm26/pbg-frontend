@@ -3,7 +3,15 @@ import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 
 function ProductsQuantity({ route, navigation }) {
   const { id, title, description, imageUrl, price, stock } = route.params;
-  function handlePress() {
+  async function handlePress() {
+    console.log(id, stock)
+    const res = await fetch(
+      `https://pbg-server.herokuapp.com/shop/addStock/${id}?addStock=${stock / 10}`,
+      {
+        method: "PUT"
+      }
+    )
+    console.log(res)
     navigation.navigate("ProductSummery");
   }
 

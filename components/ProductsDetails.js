@@ -6,7 +6,7 @@ import ProductsQuantity from "./ProductsQuantity";
 const Stack = createNativeStackNavigator();
 
 function ProductsDetails({ route, navigation }) {
-  const { id, title, description, imageUrl, price } = route.params;
+  const { id, title, description, imageUrl, price, stock } = route.params;
 
   return (
     <Stack.Navigator>
@@ -20,7 +20,7 @@ function ProductsDetails({ route, navigation }) {
         name="ProductsQuantity"
         component={ProductsQuantity}
         options={{ headerShown: false }}
-        initialParams={{ id, title, description, imageUrl, price }}
+        initialParams={{ id, title, description, imageUrl, price, stock }}
       />
     </Stack.Navigator>
   );
