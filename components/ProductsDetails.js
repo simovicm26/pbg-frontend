@@ -14,7 +14,7 @@ function ProductsDetails({ route, navigation }) {
         name="ProductSummery"
         component={ProductSummery}
         options={{ headerShown: false }}
-        initialParams={{ id, title, description, imageUrl, price }}
+        initialParams={{ id, title, description, imageUrl, price, stock }}
       />
       <Stack.Screen
         name="ProductsQuantity"
