@@ -1,48 +1,77 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+  ScrollView,
+} from "react-native";
 
 function ProductSummery({ route, navigation }) {
-  const { id, title, description, imageUrl } = route.params;
-  console.log(imageUrl)
+  const { id, title, description, imageUrl, price } = route.params;
+  console.log(imageUrl);
   return (
-    <View style={styles.wrapper}>
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.descriptionWrapper}>
-        <Text style={styles.description}>Description:</Text>
-        <Text style={styles.descriptionContent}>{description}</Text>
-      </View>
-      <View style={styles.descriptionWrapper}>
-        <Text style={styles.description}>Current Quantity: 5</Text>
-      </View>
-      <Image
-        source={{ uri: `http://10.0.2.2:8000/image/${imageUrl.slice(7)}` }}
-        style={styles.gridBox}
-      />
+    <>
+      <ScrollView>
+        <View style={styles.wrapper}>
+          <Image
+            source={{
+              uri: `https://pbg-server.herokuapp.com/image/${imageUrl.slice(
+                7
+              )}`,
+            }}
+            style={styles.gridBox}
+          />
+          <Text style={styles.title}>{title}</Text>
+          <View style={styles.descriptionWrapper}>
+            <Text style={styles.description}>Description:</Text>
+            <Text style={styles.descriptionContent}>{description}</Text>
+          </View>
+          <View>
+            <View style={styles.descriptionWrapper}>
+              <Text style={styles.description}>Product Price:</Text>
+              <Text style={styles.description}>{`${price} Din`}</Text>
+            </View>
+            <View style={styles.descriptionWrapper}>
+              <Text style={styles.description}>Current Quantity:</Text>
+              <Text style={styles.description}>5</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
       <View style={styles.restockButton}>
         <Pressable onPress={() => navigation.navigate("ProductsQuantity")}>
           <Text style={styles.restockText}>Add Stock</Text>
         </Pressable>
       </View>
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   descriptionWrapper: { marginVertical: 30 },
-  wrapper: { flex: 1, paddingVertical: 30, paddingHorizontal: 20 },
+  wrapper: {
+    flex: 1,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    alignItems: "center",
+  },
   title: {
     fontSize: 30,
     textAlign: "center",
   },
   gridBox: {
-    width: 150,
-    height: 150,
+    width: "100%",
+    height: 200,
+    marginVertical: 20,
     backgroundColor: "red",
     borderRadius: 10,
   },
   description: {
     fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
   },
   descriptionContent: {
     fontSize: 16,
@@ -51,7 +80,6 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "red",
     padding: 20,
-    borderRadius: 10,
   },
   restockText: {
     fontSize: 20,

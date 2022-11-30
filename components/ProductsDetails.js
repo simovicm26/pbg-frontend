@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
 import ProductSummery from "./ProductSummery";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProductsQuantity from "./ProductsQuantity";
@@ -7,7 +6,7 @@ import ProductsQuantity from "./ProductsQuantity";
 const Stack = createNativeStackNavigator();
 
 function ProductsDetails({ route, navigation }) {
-  const { id, title, description, imageUrl } = route.params;
+  const { id, title, description, imageUrl, price } = route.params;
 
   return (
     <Stack.Navigator>
@@ -15,7 +14,7 @@ function ProductsDetails({ route, navigation }) {
         name="ProductSummery"
         component={ProductSummery}
         options={{ headerShown: false }}
-        initialParams={{ id, title, description, imageUrl }}
+        initialParams={{ id, title, description, imageUrl, price }}
       />
       <Stack.Screen
         name="ProductsQuantity"

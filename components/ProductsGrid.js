@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   View,
@@ -12,10 +12,18 @@ import openSocket from "socket.io-client";
 /* import { CATEGORIES } from "../screens/dummy-data"; */
 import Icon from "react-native-vector-icons/FontAwesome";
 const myIcon = <Icon name="plus" size={30} color="#ffffff" />;
+const bin = <Icon name="trash" size={30} color="#ffffff" />;
+const cross = <Icon name="close" size={20} color="#ffffff" />;
+const crossBig = <Icon name="close" size={30} color="#ffffff" />;
 
 function ProductsGrid(props) {
   const [data, setData] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(true);
+  const [deleteMode, setDeleteMode] = useState(false);
+
+  function handleDelete(id) {
+    setData(data.filter((item) => item._id !== id));
+  }
 
   React.useEffect(() => {
     fetch("https://pbg-server.herokuapp.com/shop/getProducts")
@@ -42,21 +50,46 @@ function ProductsGrid(props) {
     return (
       <View style={styles.gridItem}>
         <Pressable
-          onPress={() =>
-            props.navigation.navigate("ProductsDetails", {
-              id: item._id,
-              title: item.title,
-              description: item.description,
-              imageUrl: item.imageUrl
-            })
-          }
+          onPress={() => {
+            if (!deleteMode)
+              props.navigation.navigate("ProductsDetails", {
+                id: item._id,
+                title: item.title,
+                description: item.description,
+                imageUrl: item.imageUrl,
+                price: item.price,
+              });
+          }}
         >
           <Image
-            source={{ uri: `https://pbg-server.herokuapp.com/image/${item.imageUrl.slice(7)}` }}
+            source={{
+              uri: `https://pbg-server.herokuapp.com/image/${item.imageUrl.slice(
+                7
+              )}`,
+            }}
             style={styles.gridBox}
           />
           <Text style={styles.gridText}>{item.title}</Text>
         </Pressable>
+        {deleteMode && (
+          <View
+            style={{
+              width: 30,
+              height: 30,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "red",
+              position: "absolute",
+              top: -10,
+              right: -10,
+              borderRadius: 100,
+            }}
+          >
+            <Pressable onPress={() => handleDelete(item._id)}>
+              {cross}
+            </Pressable>
+          </View>
+        )}
       </View>
     );
   }
@@ -65,14 +98,24 @@ function ProductsGrid(props) {
     <>
       {!isLoading && (
         <FlatList
+          contentContainerStyle={{ alignItems: "center", paddingVertical: 30 }}
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
           numColumns={2}
         />
       )}
+      <View style={styles.deleteButton}>
+        <Pressable onPress={() => setDeleteMode((prev) => !prev)}>
+          {deleteMode ? crossBig : bin}
+        </Pressable>
+      </View>
       <View style={styles.addButton}>
-        <Pressable onPress={() => props.navigation.navigate("ProductForm")}>
+        <Pressable
+          onPress={() => {
+            if (!deleteMode) props.navigation.navigate("ProductForm");
+          }}
+        >
           {myIcon}
         </Pressable>
       </View>
@@ -82,10 +125,10 @@ function ProductsGrid(props) {
 
 const styles = StyleSheet.create({
   gridItem: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 10,
+    margin: 10,
+    width: 150,
   },
   gridText: {
     textAlign: "center",
@@ -105,6 +148,18 @@ const styles = StyleSheet.create({
     margin: 20,
     borderRadius: 100,
     backgroundColor: "#353535",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  deleteButton: {
+    position: "absolute",
+    bottom: 80,
+    right: 0,
+    width: 60,
+    height: 60,
+    margin: 20,
+    borderRadius: 100,
+    backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
   },

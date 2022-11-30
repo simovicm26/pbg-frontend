@@ -1,6 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./HomeScreen";
+import { Button } from "react-native";
 import AnalyticsScreen from "./AnalyticsScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -45,6 +46,7 @@ function TabNav(props) {
         component={HomeScreen}
         options={{
           title: "Products",
+          headerRight: () => <Button title="home" />,
           tabBarStyle: { display: hide ? "none" : "flex", height: 70 },
           headerShown: !hide,
         }}
