@@ -29,10 +29,6 @@ function ProductsGrid(props) {
         `https://pbg-server.herokuapp.com/shop/deleteProduct/${id}`,
         {
           method: "DELETE",
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          body: formData,
         }
       );
       const data = await res.json();
