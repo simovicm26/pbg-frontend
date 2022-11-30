@@ -17,11 +17,20 @@ export default function ProductForm() {
 
   async function handlePress() {
     console.log(title, price, description, imageUrl);
+    const formData = new FormData()
+    formData.append('image', {
+      name: Date.now() + '_image',
+      uri: imageUrl,
+      type: 'image/jpeg'
+    })
+    formData.append('title', title)
+    formData.append('price', price)
+    formData.append('description', description)
     try {
       const res = await fetch("http://10.0.2.2:8000/shop/addProduct", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, price, description, imageUrl }),
+        headers: { "Content-Type": "multipart/form-data" },
+        body: formData
       });
       const data = await res.json();
       console.log(data);
@@ -34,7 +43,10 @@ export default function ProductForm() {
     <>
       <ScrollView>
         <View style={styles.mainWrapper}>
-          <ImagePicker></ImagePicker>
+          <ImagePicker
+            image={imageUrl}
+            handleImage={(imageUri) => setImageUrl(imageUri)}
+          />
           <TextInput
             style={styles.input}
             placeholder="Product Name"
@@ -52,11 +64,6 @@ export default function ProductForm() {
             multiline={true}
             numberOfLines={5}
             onChangeText={setDescription}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Image URL"
-            onChangeText={setImageUrl}
           />
         </View>
       </ScrollView>

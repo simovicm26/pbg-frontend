@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 
 function ProductSummery({ route, navigation }) {
-  const { id, title, description } = route.params;
+  const { id, title, description, imageUrl } = route.params;
+  console.log(imageUrl)
   return (
     <View style={styles.wrapper}>
       <Text style={styles.title}>{title}</Text>
@@ -13,6 +14,10 @@ function ProductSummery({ route, navigation }) {
       <View style={styles.descriptionWrapper}>
         <Text style={styles.description}>Current Quantity: 5</Text>
       </View>
+      <Image
+        source={{ uri: `http://10.0.2.2:8000/image/${imageUrl.slice(7)}` }}
+        style={styles.gridBox}
+      />
       <View style={styles.restockButton}>
         <Pressable onPress={() => navigation.navigate("ProductsQuantity")}>
           <Text style={styles.restockText}>Add Stock</Text>
@@ -28,6 +33,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     textAlign: "center",
+  },
+  gridBox: {
+    width: 150,
+    height: 150,
+    backgroundColor: "red",
+    borderRadius: 10,
   },
   description: {
     fontSize: 20,

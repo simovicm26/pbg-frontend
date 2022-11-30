@@ -40,11 +40,14 @@ function ProductsGrid(props) {
               id: item._id,
               title: item.title,
               description: item.description,
+              imageUrl: item.imageUrl
             })
           }
         >
-          <View style={styles.gridBox}></View>
-          <Image source={item.imageUrl} />
+          <Image
+            source={{ uri: `http://10.0.2.2:8000/image/${item.imageUrl.slice(7)}` }}
+            style={styles.gridBox}
+          />
           <Text style={styles.gridText}>{item.title}</Text>
         </Pressable>
       </View>

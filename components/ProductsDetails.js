@@ -7,7 +7,7 @@ import ProductsQuantity from "./ProductsQuantity";
 const Stack = createNativeStackNavigator();
 
 function ProductsDetails({ route, navigation }) {
-  const { id, title, description } = route.params;
+  const { id, title, description, imageUrl } = route.params;
 
   return (
     <Stack.Navigator>
@@ -15,7 +15,7 @@ function ProductsDetails({ route, navigation }) {
         name="ProductSummery"
         component={ProductSummery}
         options={{ headerShown: false }}
-        initialParams={{ id, title, description }}
+        initialParams={{ id, title, description, imageUrl }}
       />
       <Stack.Screen
         name="ProductsQuantity"
