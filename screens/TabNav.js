@@ -46,6 +46,7 @@ function TabNav(props) {
         options={{
           title: "Products",
           tabBarStyle: { display: hide ? "none" : "flex", height: 70 },
+          headerShown: !hide,
         }}
       />
       <Tab.Screen

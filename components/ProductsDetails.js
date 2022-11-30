@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import ProductSummery from "./ProductSummery";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -6,8 +6,9 @@ import ProductsQuantity from "./ProductsQuantity";
 
 const Stack = createNativeStackNavigator();
 
-function ProductsDetails({ route }) {
+function ProductsDetails({ route, navigation }) {
   const { id, title, description } = route.params;
+
   return (
     <Stack.Navigator>
       <Stack.Screen
