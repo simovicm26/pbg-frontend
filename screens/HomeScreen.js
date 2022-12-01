@@ -11,11 +11,6 @@ const Stack = createNativeStackNavigator();
 
 function HomeScreen({ route }) {
   const { admin, employee } = route.params;
-  const [cart, setCart] = useState([]);
-
-  function addToCart(img, title) {
-    setCart((prev) => [...prev, { img, title }]);
-  }
 
   return (
     <Stack.Navigator>
@@ -39,7 +34,6 @@ function HomeScreen({ route }) {
         initialParams={{
           employee,
           admin,
-          add: addToCart,
         }}
       />
       <Stack.Screen
@@ -52,12 +46,7 @@ function HomeScreen({ route }) {
         component={ProductForm}
         options={{ title: "Add New Product" }}
       />
-      <Stack.Screen
-        name="Cart"
-        component={Cart}
-        options={{ title: "Cart" }}
-        initialParams={{ cart }}
-      />
+      <Stack.Screen name="Cart" component={Cart} options={{ title: "Cart" }} />
     </Stack.Navigator>
   );
 }

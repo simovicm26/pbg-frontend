@@ -9,17 +9,8 @@ import {
 } from "react-native";
 
 function ProductSummery({ route, navigation }) {
-  const {
-    id,
-    title,
-    description,
-    imageUrl,
-    price,
-    stock,
-    admin,
-    employee,
-    add,
-  } = route.params;
+  const { id, title, description, imageUrl, price, stock, admin, employee } =
+    route.params;
 
   return (
     <>
