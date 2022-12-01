@@ -9,7 +9,17 @@ import {
 } from "react-native";
 
 function ProductSummery({ route, navigation }) {
-  const { id, title, description, imageUrl, price, stock } = route.params;
+  const {
+    id,
+    title,
+    description,
+    imageUrl,
+    price,
+    stock,
+    admin,
+    employee,
+    add,
+  } = route.params;
 
   return (
     <>
@@ -40,11 +50,20 @@ function ProductSummery({ route, navigation }) {
           </View>
         </View>
       </ScrollView>
-      <View style={styles.restockButton}>
-        <Pressable onPress={() => navigation.navigate("ProductsQuantity")}>
-          <Text style={styles.restockText}>Add Stock</Text>
-        </Pressable>
-      </View>
+      {admin && (
+        <View style={styles.restockButton}>
+          <Pressable onPress={() => navigation.navigate("ProductsQuantity")}>
+            <Text style={styles.restockText}>Add Stock</Text>
+          </Pressable>
+        </View>
+      )}
+      {!admin && (
+        <View style={styles.restockButton}>
+          <Pressable onPress={() => add(imageUrl, title)}>
+            <Text style={styles.restockText}>Add To Cart</Text>
+          </Pressable>
+        </View>
+      )}
     </>
   );
 }

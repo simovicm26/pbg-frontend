@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 
 function TabNav(props) {
   const hide = props.routeName !== "ProductsList";
-
+  console.log(props.admin);
   function signOut() {
     props.signout();
   }
@@ -56,7 +56,10 @@ function TabNav(props) {
           tabBarStyle: { display: hide ? "none" : "flex", height: 70 },
           headerShown: !hide,
         }}
-        initialParams={{ employee: props.employee, admin: props.admin }}
+        initialParams={{
+          employee: props.employee,
+          admin: props.admin,
+        }}
       />
       {props.admin && (
         <Tab.Screen

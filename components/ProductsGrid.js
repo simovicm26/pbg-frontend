@@ -17,11 +17,11 @@ const cross = <Icon name="close" size={20} color="#ffffff" />;
 const crossBig = <Icon name="close" size={30} color="#ffffff" />;
 const cart = <Icon name="shopping-cart" size={30} color="#ffffff" />;
 
-function ProductsGrid(props) {
+function ProductsGrid({ route, navigation }) {
+  const { admin, employee } = route.params;
   const [productData, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [deleteMode, setDeleteMode] = useState(false);
-
   async function handleDelete(id) {
     setDeleteMode((prev) => !prev);
     try {
@@ -53,7 +53,9 @@ function ProductsGrid(props) {
         });
         socket.on("productDeleted", (data) => {
           console.log("DELETE");
-          setData((prev) => prev.filter((product) => product._id !== data.productId));
+          setData((prev) =>
+            prev.filter((product) => product._id !== data.productId)
+          );
         });
         socket.on("stockAdded", (data) => {
           console.log("yupi");
@@ -81,7 +83,7 @@ function ProductsGrid(props) {
         <Pressable
           onPress={() => {
             if (!deleteMode)
-              props.navigation.navigate("ProductsDetails", {
+              navigation.navigate("ProductsDetails", {
                 id: item._id,
                 title: item.title,
                 description: item.description,
@@ -135,29 +137,29 @@ function ProductsGrid(props) {
           numColumns={2}
         />
       )}
-      {props.admin && (
+      {admin && (
         <View style={styles.deleteButton}>
           <Pressable onPress={() => setDeleteMode((prev) => !prev)}>
             {deleteMode ? crossBig : bin}
           </Pressable>
         </View>
       )}
-      {props.admin && (
+      {admin && (
         <View style={styles.addButton}>
           <Pressable
             onPress={() => {
-              if (!deleteMode) props.navigation.navigate("ProductForm");
+              if (!deleteMode) navigation.navigate("ProductForm");
             }}
           >
             {myIcon}
           </Pressable>
         </View>
       )}
-      {!props.admin && (
+      {!admin && (
         <View style={styles.addButton}>
           <Pressable
             onPress={() => {
-              // if (!deleteMode) props.navigation.navigate("ProductForm");
+              navigation.navigate("Cart");
             }}
           >
             {cart}

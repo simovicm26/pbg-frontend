@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Button, Pressable } from "react-native";
 import ProductsGrid from "../components/ProductsGrid";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProductsDetails from "../components/ProductsDetails";
 import LoginForm from "../components/LoginForm";
 import ProductForm from "../components/ProductForm";
+import Cart from "../components/Cart";
 
 const Stack = createNativeStackNavigator();
 
-function HomeScreen({ employee, admin }) {
+function HomeScreen({ route }) {
+  const { admin, employee } = route.params;
+  const [cart, setCart] = useState([]);
+
+  function addToCart(img, title) {
+    setCart((prev) => [...prev, { img, title }]);
+  }
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -17,13 +25,21 @@ function HomeScreen({ employee, admin }) {
         options={{
           headerShown: false,
         }}
-        initialParams={{ employee, admin }}
+        initialParams={{
+          employee,
+          admin,
+        }}
       />
       <Stack.Screen
         name="ProductsDetails"
         component={ProductsDetails}
         options={{
           title: "Details",
+        }}
+        initialParams={{
+          employee,
+          admin,
+          add: addToCart,
         }}
       />
       <Stack.Screen
@@ -35,6 +51,12 @@ function HomeScreen({ employee, admin }) {
         name="ProductForm"
         component={ProductForm}
         options={{ title: "Add New Product" }}
+      />
+      <Stack.Screen
+        name="Cart"
+        component={Cart}
+        options={{ title: "Cart" }}
+        initialParams={{ cart }}
       />
     </Stack.Navigator>
   );
