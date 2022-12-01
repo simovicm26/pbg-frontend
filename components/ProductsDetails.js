@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import ProductSummery from "./ProductSummery";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProductsQuantity from "./ProductsQuantity";
@@ -20,7 +20,14 @@ function ProductsDetails({ route, navigation }) {
         name="ProductsQuantity"
         component={ProductsQuantity}
         options={{ headerShown: false }}
-        initialParams={{ id, title, description, imageUrl, price, stock }}
+        initialParams={{
+          id,
+          title,
+          description,
+          imageUrl,
+          price,
+          stock,
+        }}
       />
     </Stack.Navigator>
   );

@@ -9,6 +9,10 @@ const Tab = createBottomTabNavigator();
 
 function TabNav(props) {
   const hide = props.routeName !== "ProductsList";
+
+  function signOut() {
+    props.signout();
+  }
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -46,16 +50,24 @@ function TabNav(props) {
         component={HomeScreen}
         options={{
           title: "Products",
-          headerRight: () => <Button title="home" />,
+          headerRight: () => (
+            <Button title="Sign Out" onPress={signOut} color="red" />
+          ),
           tabBarStyle: { display: hide ? "none" : "flex", height: 70 },
           headerShown: !hide,
         }}
+        initialParams={{ employee: props.employee, admin: props.admin }}
       />
-      <Tab.Screen
-        name="Analytics"
-        component={AnalyticsScreen}
-        options={{ tabBarStyle: { height: 70 } }}
-      />
+      {props.admin && (
+        <Tab.Screen
+          name="Analytics"
+          component={AnalyticsScreen}
+          options={{
+            tabBarStyle: { height: 70 },
+            headerRight: () => <Button title="Sign in" />,
+          }}
+        />
+      )}
     </Tab.Navigator>
   );
 }

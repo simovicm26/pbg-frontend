@@ -8,7 +8,7 @@ import ProductForm from "../components/ProductForm";
 
 const Stack = createNativeStackNavigator();
 
-function HomeScreen() {
+function HomeScreen({ employee, admin }) {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -17,6 +17,7 @@ function HomeScreen() {
         options={{
           headerShown: false,
         }}
+        initialParams={{ employee, admin }}
       />
       <Stack.Screen
         name="ProductsDetails"

@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 
 function ProductsQuantity({ route, navigation }) {
   const { id, title, description, imageUrl, price, stock } = route.params;
+
   const [number, onChangeNumber] = useState(0);
   async function handlePress() {
     console.log(id, stock);
@@ -12,7 +13,6 @@ function ProductsQuantity({ route, navigation }) {
         method: "PUT",
       }
     );
-    navigation.navigate("ProductSummery");
   }
 
   return (

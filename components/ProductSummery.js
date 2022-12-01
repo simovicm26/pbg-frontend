@@ -10,7 +10,7 @@ import {
 
 function ProductSummery({ route, navigation }) {
   const { id, title, description, imageUrl, price, stock } = route.params;
-  console.log(imageUrl);
+
   return (
     <>
       <ScrollView>

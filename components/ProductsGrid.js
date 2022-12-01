@@ -15,6 +15,7 @@ const myIcon = <Icon name="plus" size={30} color="#ffffff" />;
 const bin = <Icon name="trash" size={30} color="#ffffff" />;
 const cross = <Icon name="close" size={20} color="#ffffff" />;
 const crossBig = <Icon name="close" size={30} color="#ffffff" />;
+const cart = <Icon name="shopping-cart" size={30} color="#ffffff" />;
 
 let socket;
 function ProductsGrid(props) {
@@ -56,19 +57,21 @@ function ProductsGrid(props) {
           setData((prev) => [...prev, data.product]);
         });
         socket.on("stockAdded", (data) => {
-          console.log('yupi')
-          setData(prev => {
-            const index = prev.findIndex(product => product._id === data.productId)
-            console.log(index)
-            const newData = [...prev]
-            const oldStock = newData[index].stock
-            console.log(oldStock)
-            console.log(data.addStock)
-            newData[index].stock = Number(oldStock) + Number(data.addStock)
-            console.log(newData)
-            return newData
-          })
-        })
+          console.log("yupi");
+          setData((prev) => {
+            const index = prev.findIndex(
+              (product) => product._id === data.productId
+            );
+            console.log(index);
+            const newData = [...prev];
+            const oldStock = newData[index].stock;
+            console.log(oldStock);
+            console.log(data.addStock);
+            newData[index].stock = Number(oldStock) + Number(data.addStock);
+            console.log(newData);
+            return newData;
+          });
+        });
       })
       .catch((error) => console.log(error));
   }, []);
@@ -85,7 +88,7 @@ function ProductsGrid(props) {
                 description: item.description,
                 imageUrl: item.imageUrl,
                 price: item.price,
-                stock: item.stock
+                stock: item.stock,
               });
           }}
         >
@@ -133,20 +136,35 @@ function ProductsGrid(props) {
           numColumns={2}
         />
       )}
-      <View style={styles.deleteButton}>
-        <Pressable onPress={() => setDeleteMode((prev) => !prev)}>
-          {deleteMode ? crossBig : bin}
-        </Pressable>
-      </View>
-      <View style={styles.addButton}>
-        <Pressable
-          onPress={() => {
-            if (!deleteMode) props.navigation.navigate("ProductForm");
-          }}
-        >
-          {myIcon}
-        </Pressable>
-      </View>
+      {props.admin && (
+        <View style={styles.deleteButton}>
+          <Pressable onPress={() => setDeleteMode((prev) => !prev)}>
+            {deleteMode ? crossBig : bin}
+          </Pressable>
+        </View>
+      )}
+      {props.admin && (
+        <View style={styles.addButton}>
+          <Pressable
+            onPress={() => {
+              if (!deleteMode) props.navigation.navigate("ProductForm");
+            }}
+          >
+            {myIcon}
+          </Pressable>
+        </View>
+      )}
+      {!props.admin && (
+        <View style={styles.addButton}>
+          <Pressable
+            onPress={() => {
+              // if (!deleteMode) props.navigation.navigate("ProductForm");
+            }}
+          >
+            {cart}
+          </Pressable>
+        </View>
+      )}
     </>
   );
 }
