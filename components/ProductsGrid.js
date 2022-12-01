@@ -132,6 +132,7 @@ function ProductsGrid({ route, navigation }) {
         <FlatList
           contentContainerStyle={{ alignItems: "center", paddingVertical: 30 }}
           data={productData}
+          extraData={productData}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
           numColumns={2}
