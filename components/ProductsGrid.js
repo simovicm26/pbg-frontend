@@ -17,7 +17,6 @@ const cross = <Icon name="close" size={20} color="#ffffff" />;
 const crossBig = <Icon name="close" size={30} color="#ffffff" />;
 const cart = <Icon name="shopping-cart" size={30} color="#ffffff" />;
 
-let socket;
 function ProductsGrid(props) {
   const [productData, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -33,17 +32,12 @@ function ProductsGrid(props) {
         }
       );
       await res.json();
-      socket.on("productDeleted", () => {
-        console.log("DELETE");
-        setData((prev) => prev.filter((product) => product._id !== id));
-      });
     } catch (error) {
       console.log(error);
     }
   }
 
   React.useEffect(() => {
-    socket = openSocket("https://pbg-server.herokuapp.com");
     fetch("https://pbg-server.herokuapp.com/shop/getProducts")
       .then((res) => res.json())
       .then((data) => {
@@ -52,9 +46,14 @@ function ProductsGrid(props) {
         return;
       })
       .then(() => {
+        const socket = openSocket("https://pbg-server.herokuapp.com");
         socket.on("connect", () => console.log(socket.id));
         socket.on("productAdded", (data) => {
           setData((prev) => [...prev, data.product]);
+        });
+        socket.on("productDeleted", (data) => {
+          console.log("DELETE");
+          setData((prev) => prev.filter((product) => product._id !== data.productId));
         });
         socket.on("stockAdded", (data) => {
           console.log("yupi");
